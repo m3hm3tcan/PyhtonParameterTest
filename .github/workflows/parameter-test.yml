@@ -44,40 +44,25 @@ on:
 jobs:
   run-python-script:
     runs-on: ubuntu-latest
+    env:
+        ORG: ${{ inputs.org }}
+        PROJECTNAME: ${{ inputs.projectName }} 
+        WROKITEMTYPE: ${{ inputs.workItemType }} 
+        RULETYPE: ${{ inputs.ruleType }} 
+        STATECATEGORY: ${{ inputs.stageCategory }}
     if: github.ref == 'refs/heads/main'    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up Python
-        uses: actions/setup-python@v5 
-        with:
-          python-version: '3.10'
-          
-        env:
-          ORG: ${{ inputs.org }}
-          PROJECTNAME: ${{ inputs.projectName }} 
-          WROKITEMTYPE: ${{ inputs.workItemType }} 
-          RULETYPE: ${{ inputs.ruleType }} 
-          STATECATEGORY: ${{ inputs.stageCategory }}   
+        uses: actions/setup-python@v5
+
+      - name: Install dependencies
+        run: |
+          pyhton -m pip install --upgrade pip
+          pip install argparse          
           
       - name: Run Python script
         run: python parameter-test.py --org $ORG --projectName $PROJECTNAME --workItemType $WROKITEMTYPE --ruleType $RULETYPE --stageCategory $STATECATEGORY
         
-# jobs:
-#   log-the-inputs:
-#     runs-on: ubuntu-latest
-#     if: github.ref == 'refs/heads/main'
-#     steps:
-#       - run: |
-#           echo "Org: $ORG"
-#           echo "Project: $PROJECTNAME"
-#           echo "Wrok Item Type: $WROKITEMTYPE"
-#           echo "Rule Type: $RULETYPE"
-#           echo "Log level: $STATECATEGORY"
-#         env:
-#           ORG: ${{ inputs.org }}
-#           PROJECTNAME: ${{ inputs.projectName }} 
-#           WROKITEMTYPE: ${{ inputs.workItemType }} 
-#           RULETYPE: ${{ inputs.ruleType }} 
-#           STATECATEGORY: ${{ inputs.stageCategory }} 
