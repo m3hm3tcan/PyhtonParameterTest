@@ -64,5 +64,6 @@ jobs:
           pip install argparse          
           
       - name: Run Python script
-        run: python parameter-test.py --org $ORG --projectName '$PROJECTNAME' --workItemType '$WROKITEMTYPE' --ruleType '$RULETYPE' --stageCategory '$STATECATEGORY'
+        run: python parameter-test.py --org $ORG
+        #--projectName $PROJECTNAME --workItemType $WROKITEMTYPE --ruleType $RULETYPE --stageCategory $STATECATEGORY
         
