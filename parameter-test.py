@@ -1,5 +1,4 @@
 import argparse
-import parser
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--org",required=True)
